@@ -1,0 +1,18 @@
+numpy
+pandas
+jupyterlab
+matplotlib
+seaborn
+Pillow
+plotly
+requests
+tqdm
+imagehash
+scikit-image
+scikit-learn
+# funpymodeling
+yellowbrick
+gradio
+minepy
+pandas-profiling
+ipywidgets
