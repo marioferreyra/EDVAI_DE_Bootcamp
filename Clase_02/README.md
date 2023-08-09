@@ -1,484 +1,361 @@
 <img src="https://i.ibb.co/5RM26Cw/LOGO-COLOR2.png" width="500px">
 
-Clase 02 - Ejercicio SQL
+Clase 03 - Ejercicio SQL
 ========================
 
-SELECT DISTINT
---------------
+AVG
+---
 
 ### Ejercicio 1
 
-Obtener una lista de todas las categorías distintas.
+Obtener el promedio de precios por cada categoría de producto. La cláusula OVER(PARTITION BY CategoryID) específica que se debe calcular el promedio de precios por cada valor único de CategoryID en la tabla.
 
 ```sql
 select
-    distinct c.category_name
-from
-    categories c;
-```
-
-### Ejercicio 2
-
-Obtener una lista de todas las regiones distintas para los clientes.
-
-```sql
-select
-    distinct c.region
-from
-    customers c;
-```
-
-### Ejercicio 3
-
-Obtener una lista de todos los títulos de contacto distintos.
-
-```sql
-select
-    distinct c.contact_title 
-from
-    customers c;
-```
-
-ORDER BY
---------
-
-### Ejercicio 4
-
-Obtener una lista de todos los clientes, ordenados por país.
-
-```sql
-select
-    *
-from
-    customers c
-order by
-    country;
-```
-
-### Ejercicio 5
-
-Obtener una lista de todos los pedidos, ordenados por id del empleado y fecha del pedido.
-
-```sql
-select
-    *
-from
-    orders o
-order by
-    customer_id, order_date;
-```
-
-INSERT - INTO
--------------
-
-### Ejercicio 6
-
-Insertar un nuevo cliente en la tabla Customers.
-
-```sql
-insert into customers(customer_id, company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax)
-values ('XXXXX', 'My Company', 'Mario Ferreyra', 'CEO', null, null, null, null, null, null, null);
-```
-
-### Ejercicio 7
-
-Insertar una nueva región en la tabla Región.
-
-```sql
-insert into region(region_id, region_description)
-values ('5', 'My Region');
-```
-
-NULL - COALESCE
----------------
-
-### Ejercicio 8
-
-Obtener todos los clientes de la tabla Customers donde el campo Región es NULL.
-
-```sql
-select
-    *
-from
-    customers c
-where 
-    region is null;
-```
-
-### Ejercicio 9
-
-Obtener Product_Name y Unit_Price de la tabla Products, y si Unit_Price es NULL, use el precio estándar de $10 en su lugar.
-
-```sql
-select
+    c.category_name,
     p.product_name,
-    coalesce(p.unit_price, 10)
-from
-    products p;
-```
-
-INNER JOIN
-----------
-
-### Ejercicio 10
-
-Obtener el nombre de la empresa, el nombre del contacto y la fecha del pedido de todos los pedidos.
-
-```sql
-select
-    c.company_name,
-    c.contact_name,
-    o.order_date
-from
-    customers c
-    inner join orders o on c.customer_id = o.customer_id;
-```
-
-### Ejercicio 11
-
-Obtener la identificación del pedido, el nombre del producto y el descuento de todos los detalles del pedido y productos.
-
-```sql
-select
-    od.order_id,
-    p.product_name,
-    od.discount
-from
-    order_details od
-    inner join products p on od.product_id = p.product_id;
-```
-
-LEFT JOIN
----------
-
-### Ejercicio 12
-
-Obtener el identificador del cliente, el nombre de la compañía, el identificador y la fecha de la orden de todas las órdenes y aquellos clientes que hagan match.
-
-```sql
-select
-    c.customer_id,
-    c.company_name,
-    o.order_id,
-    o.order_date
-from
-    orders o
-    left join customers c on o.customer_id = c.customer_id;
-```
-
-### Ejercicio 13
-
-Obtener el identificador del empleados, apellido, identificador de territorio y descripción del territorio de todos los empleados y aquellos que hagan match en territorios.
-
-```sql
-select
-    e.employee_id,
-    e.last_name,
-    et.territory_id,
-    t.territory_description
-from
-    employee_territories et
-    left join employees e on et.employee_id = e.employee_id
-    left join territories t on et.territory_id = t.territory_id;
-```
-
-### Ejercicio 14
-
-Obtener el identificador de la orden y el nombre de la empresa de todos las órdenes y aquellos clientes que hagan match.
-
-```sql
-select
-    o.order_id,
-    c.company_name
-from
-    orders o
-    left join customers c on o.customer_id = c.customer_id;
-```
-
-RIGHT JOIN
-----------
-
-### Ejercicio 15
-
-Obtener el identificador de la orden, y el nombre de la compañía de todas las órdenes y aquellos clientes que hagan match.
-
-```sql
-select
-    o.order_id,
-    c.company_name
-from
-    customers c
-    right join orders o on c.customer_id = o.customer_id;
-```
-
-### Ejercicio 16
-
-Obtener el nombre de la compañía, y la fecha de la orden de todas las órdenes y aquellos transportistas que hagan match. Solamente para aquellas ordenes del año 1996.
-
-```sql
-select
-    s.company_name,
-    o.order_date
-from
-    shippers s
-    right join orders o on s.shipper_id = o.ship_via 
-where
-    date_part('YEAR', o.order_date) = '1996'
-order by
-    o.order_date;
-```
-
-FULL OUTER JOIN
----------------
-
-### Ejercicio 17
-
-Obtener nombre y apellido del empleados y el identificador de territorio, de todos los empleados y aquellos que hagan match o no de employee_territories.
-
-```sql
-select
-    e.first_name,
-    e.last_name,
-    et.territory_id
-from
-    employees e
-    full outer join employee_territories et on e.employee_id = et.employee_id;
-```
-
-### Ejercicio 18
-
-Obtener el identificador de la orden, precio unitario, cantidad y total de todas las órdenes y aquellas órdenes detalles que hagan match o no.
-
-```sql
-select
-    o.order_id,
-    od.unit_price,
-    od.quantity,
-    (od.unit_price * od.quantity) as total
-from
-    orders o
-    full outer join order_details od on o.order_id = od.order_id;
-```
-
-UNION
------
-
-### Ejercicio 19
-
-Obtener la lista de todos los nombres de los clientes y los nombres de los proveedores.
-
-```sql
-(
-    select
-        c.company_name as nombre
-    from
-        customers c
-)
-union
-(
-    select
-        s.company_name as nombre
-    from
-        suppliers s
-);
-```
-
-### Ejercicio 20
-
-Obtener la lista de los nombres de todos los empleados y los nombres de los gerentes de departamento.
-
-```sql
-(
-    select
-        e.first_name as nombre
-    from
-        employees e
-)
-union
-(
-    select
-        e.first_name as nombre
-    from
-        employees e
-    where
-        e.employee_id = e.reports_to
-);
-```
-
-SUBQUERIES
-----------
-
-### Ejercicio 21
-
-Obtener los productos del stock que han sido vendidos.
-
-```sql
-select
-    p.product_name,
-    p.product_id
-from
-    products p
-where
-    p.product_id in (
-        select
-            distinct od.product_id
-        from
-            order_details od
-    );
-```
-
-### Ejercicio 22
-
-Obtener los clientes que han realizado un pedido con destino a Argentina.
-
-```sql
-select
-    c.company_name
-from
-    customers c
-where
-    c.customer_id in (
-        select
-            distinct o.customer_id
-        from
-            orders o
-        where
-            o.ship_country = 'Argentina'
-    );
-```
-
-### Ejercicio 23
-
-Obtener el nombre de los productos que nunca han sido pedidos por clientes de Francia.
-
-```sql
-select
-    p.product_name
-from
-    products p
-where
-    p.product_id not in (
-        select
-            distinct od.product_id
-        from
-            order_details od
-        where
-            od.order_id in (
-                select
-                    o.order_id
-                from
-                    orders o
-                where
-                    o.customer_id in (
-                        select
-                            c.customer_id
-                        from
-                            customers c
-                        where
-                            c.country = 'France'
-                    )
-            )
-    );
-```
-
-GROUP BY
---------
-
-### Ejercicio 24
-
-Obtener la cantidad de productos vendidos por identificador de orden.
-
-```sql
-select
-    od.order_id,
-    sum(od.quantity) as sum_quantity
-from
-    order_details od
-group by
-    od.order_id;
-```
-
-### Ejercicio 25
-
-Obtener el promedio de productos en stock por producto.
-
-```sql
-select
-    p.product_name,
-    avg(p.units_in_stock) as avg_units_in_stock
-from
-    products p
-group by
-    p.product_name;
-```
-
-HAVING
-------
-
-### Ejercicio 26
-
-Cantidad de productos en stock por producto, donde haya más de 100 productos en stock.
-
-```sql
-select
-    p.product_name,
-    sum(p.units_in_stock) as sum_units_in_stock
-from
-    products p
-group by
-    p.product_name
-having
-    sum(p.units_in_stock) > 100;
-```
-
-### Ejercicio 27
-
-Obtener el promedio de frecuencia de pedidos por cada compañía y solo mostrar aquellas con un promedio de frecuencia de pedidos superior a 10.
-
-```sql
-select
-    c.company_name,
-    sum(o.order_id) / count(o.order_id) as avg_orders
-from
-    orders o
-    left join customers c on o.customer_id = c.customer_id
-group by
-    c.company_name
-having
-    sum(o.order_id) / count(o.order_id) > 10;
-```
-
-CASE
-----
-
-### Ejercicio 28
-
-Obtener el nombre del producto y su categoría, pero muestre "Discontinued" en lugar del nombre de la categoría si el producto ha sido descontinuado.
-
-```sql
-select
-    p.product_name,
-    case
-        when p.discontinued = 1 then 'Discontinued'
-        else c.category_name
-    end as product_category
+    p.unit_price
+    avg(p.unit_price) over(partition by p.category_id) as avg_price_by_category
 from
     products p
     left join categories c on p.category_id = c.category_id;
 ```
 
-### Ejercicio 29
+### Ejercicio 2
 
-Obtener el nombre del empleado y su título, pero muestre "Gerente de Ventas" en lugar del título si el empleado es un gerente de ventas (Sales Manager).
+Obtener el promedio de venta de cadacliente.
 
 ```sql
 select
-    e.first_name,
-    e.last_name,
-    case
-        when e.title = 'Sales Manager' then 'Gerente de Ventas'
-        else e.title
-    end as job_title
+    avg(od.unit_price * od.quantity) over (partition by customer_id) as avg_order_amount,
+    o.order_id,
+    o.customer_id,
+    o.employee_id,
+    o.order_date,
+    o.required_date,
+    o.shipped_date
+from
+    orders o
+    inner join order_details od on o.order_id = od.order_id
+order by
+    o.customer_id;
+```
+
+### Ejercicio 3
+
+Obtener el promedio de cantidad de productos vendidos por categoría (product_name, quantity_per_unit, unit_price, quantity, avgquantity) y ordenarlo por nombre de la categoría y nombre del producto.
+
+```sql
+select
+    p.product_name,
+    c.category_name,
+    p.quantity_per_unit,
+    od.unit_price,
+    od.quantity,
+    avg(od.quantity) over (partition by c.category_id) as avg_quantity
+from
+    products p
+    inner join order_details od on p.product_id = od.product_id 
+    left join categories c on p.category_id = c.category_id
+order by
+    c.category_name, p.product_name;
+```
+
+MIN
+---
+
+### Ejercicio 4
+
+Selecciona el ID de lcliente, la fecha de la orden y la fecha más antigua de la orden para cada cliente de la tabla 'Orders'.
+
+```sql
+select
+    o.customer_id,
+    o.order_date,
+    min(o.order_date) over (partition by o.customer_id) as earliest_order_date
+from
+    orders o;
+```
+
+MAX
+---
+
+### Ejercicio 5
+
+Seleccione el id de producto, el nombre de producto, el precio unitario, el id de categoría y el precio unitario máximo para cada categoría de la tabla Products..
+
+```sql
+select
+    p.product_id,
+    p.product_name,
+    p.unit_price,
+    p.category_id,
+    max(p.unit_price) over (partition by p.category_id) as max_unit_price
+from
+    products p;
+```
+
+ROW_NUMBER
+----------
+
+### Ejercicio 6
+
+Obtener el ranking de los productos más vendidos.
+
+```sql
+select
+    row_number() over (order by table1.total_quantity DESC) as ranking,
+    table1.product_name,
+    table1.total_quantity
+from (
+    select
+        p.product_name,
+        sum(od.quantity) as total_quantity
+    from
+        order_details od
+        left join products p on od.product_id = p.product_id
+    group by
+        p.product_name
+) as table1;
+```
+
+### Ejercicio 7
+
+Asignar numeros de fila para cada cliente, ordenados por customer_id.
+
+```sql
+select
+    row_number() over (order by c.customer_id) as rownumber,
+    c.customer_id,
+    c.company_name,
+    c.contact_name,
+    c.contact_title,
+    c.address,
+    c.city,
+    c.region,
+    c.postal_code,
+    c.country,
+    c.phone,
+    c.fax
+from
+    customers c;
+```
+
+### Ejercicio 8
+
+Obtener el ranking de los empleados más jóvenes (ranking, nombre y apellido del empleado, fecha de nacimiento).
+
+```sql
+select
+    row_number() over (order by e.birth_date desc) as ranking,
+    concat(e.first_name, ' ', e.last_name) as employee_name,
+    e.birth_date
 from
     employees e;
+```
+
+SUM
+---
+
+### Ejercicio 9
+
+Obtener la suma de venta de cada cliente.
+
+```sql
+select
+    sum(od.unit_price * od.quantity) over (partition by o.customer_id) as sum_order_amount,
+    o.order_id,
+    o.customer_id,
+    o.employee_id,
+    o.order_date,
+    o.required_date
+from
+    orders o
+    inner join order_details od on o.order_id = od.order_id;
+```
+
+### Ejercicio 10
+
+Obtener la suma total de ventas por categoría de producto.
+
+```sql
+select
+    c.category_name,
+    p.product_name,
+    od.unit_price,
+    od.quantity,
+    sum(od.unit_price * od.quantity) over (partition by c.category_id) as total_sales
+from
+    order_details od
+    left join products p on od.product_id = p.product_id
+    left join categories c on p.category_id = c.category_id
+order by
+    c.category_name, p.product_name;
+```
+
+### Ejercicio 11
+
+Calcular la suma total de gastos de envío por país de destino, luego ordenarlo por país y por orden de manera ascendente.
+
+```sql
+select
+    o.ship_country,
+    o.order_id,
+    o.shipped_date,
+    o.freight,
+    sum(o.freight) over (partition by o.ship_country) as total_shipping_costs
+from
+    orders o
+order by
+    o.ship_country asc, o.order_id asc;
+```
+
+RANK
+----
+
+### Ejercicio 12
+
+Ranking de ventas por cliente.
+
+```sql
+select
+    table1.customer_id,
+    table1.company_name,
+    table1.total_sales,
+    rank() over (order by table1.total_sales desc) as ranking
+from
+    (
+    select
+        o.customer_id,
+        c.company_name,
+        sum(od.unit_price * od.quantity) as total_sales
+    from
+        orders o
+        inner join order_details od on o.order_id = od.order_id
+        left join customers c on o.customer_id = c.customer_id
+    group by
+        o.customer_id, c.company_name
+) table1;
+```
+
+### Ejercicio 13
+
+Ranking de empleados por fecha de contratacion.
+
+```sql
+select
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    e.hire_date,
+    rank() over (order by e.hire_date) as ranking
+from
+    employees e;
+```
+
+### Ejercicio 14
+
+Ranking de productos por precio unitario.
+
+```sql
+select
+    p.product_id,
+    p.product_name,
+    p.unit_price,
+    rank() over (order by p.unit_price desc) as ranking
+from
+    products p;
+```
+
+LAG
+---
+
+### Ejercicio 15
+
+Mostrar por cada producto de una orden, la cantidad vendida y la cantidad vendida del producto previo..
+
+```sql
+select
+    od.order_id,
+    od.product_id,
+    od.quantity,
+    lag(od.quantity) over (partition by od.order_id order by od.product_id) as prev_quantity
+from
+    order_details od;
+```
+
+### Ejercicio 16
+
+Obtener un listado de ordenes mostrando el id de la orden, fecha de orden, id del cliente y última fecha de orden.
+
+```sql
+select
+    o.order_id,
+    o.order_date,
+    o.customer_id,
+    lag(o.order_date) over (partition by o.customer_id order by o.order_date) as last_order_date
+from
+    orders o;
+```
+
+### Ejercicio 17
+
+Obtener un listado de productos que contengan: id de producto, nombre del producto, precio unitario, precio del producto anterior, diferencia entre el precio del producto y precio del producto anterior.
+
+```sql
+select
+    table1.product_id,
+    table1.product_name,
+    table1.unit_price,
+    table1.last_unit_price,
+    table1.unit_price - table1.last_unit_price as price_difference
+from (
+    select
+        p.product_id,
+        p.product_name,
+        p.unit_price,
+        lag(p.unit_price) over (order by p.product_id) as last_unit_price
+    from
+        products p
+) table1;
+```
+
+LEAD
+----
+
+### Ejercicio 18
+
+Obtener un listado que muestra el precio de un producto junto con el precio del producto siguiente.
+
+```sql
+select
+    p.product_name,
+    p.unit_price,
+    lead(p.unit_price) over (order by p.product_id) as next_price
+from
+    products p;
+```
+
+### Ejercicio 19
+
+Obtener un listado que muestra el total de ventas por categoría de producto junto con el total de ventas de la categoría siguiente.
+
+```sql
+select
+    table1.category_name,
+    table1.total_sales,
+    lead(table1.total_sales) over (order by table1.category_name) as next_total_sales
+from (
+    select
+        c.category_name,
+        sum(od.unit_price * od.quantity) as total_sales
+    from
+        order_details od
+        left join products p on od.product_id = p.product_id
+        left join categories c on p.category_id = c.category_id
+    group by
+        c.category_name
+    order by
+        c.category_name
+) table1;
 ```
