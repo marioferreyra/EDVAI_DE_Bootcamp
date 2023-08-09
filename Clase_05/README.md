@@ -20,6 +20,7 @@ docker run --name edvai_postgres -e POSTGRES_PASSWORD=edvai -d -p 5432:5432 fede
 docker ps
 docker inspect edvai_postgres
 docker inspect edvai_hadoop
+docker restart <container_id>
 ```
 
 Comandos Sqoop

@@ -5,7 +5,6 @@ Escuela Datos Vivos AI - Bootcamp de Data Engineering
 
 Repositorio para Bootcamp de Data Enginner 2023 de la Escuela de Datos Vivos.
 
-
 Pagina
 ------
 
