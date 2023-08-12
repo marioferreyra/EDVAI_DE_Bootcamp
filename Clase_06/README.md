@@ -114,6 +114,7 @@ describe distance;
 
 ![image_03](./img/img03.png)
 
+
 ### Ejercicio 3
 
 Hacer ingest del file [yellow_tripdata_2021-01.csv](https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv)
@@ -138,9 +139,11 @@ df = spark.read.parquet("hdfs://172.17.0.2:9000/ingest/yellow_tripdata_2021-01.p
 
 ![image_05](./img/img05.png)
 
+
 ### Ejercicio 4
 
 (Opcional SQL) Generar una vista
+
 
 ### Ejercicio 5
 
