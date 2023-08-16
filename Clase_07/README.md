@@ -12,10 +12,10 @@ https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow
 ### Ejercicio 1
 
 En Hive, crear la siguiente tabla (externa) en la base de datos `tripdata`:
-A. `airport_trips` (tpep_pickup_datetime DATE, airport_fee DOUBLE, payment_type INTEGER, tolls_amount DOUBLE, total_amount DOUBLE)
+A. `airport_trips` (tpep_pickup_datetime DATE, airport_fee DOUBLE, payment_type INTEGER, tolls_amount DOUBLE)
 
 ```
-CREATE EXTERNAL TABLE tripdata.airport_trips(tpep_pickup_datetime DATE, airport_fee DOUBLE, payment_type INTEGER, tolls_amount DOUBLE, total_amount DOUBLE)
+CREATE EXTERNAL TABLE tripdata.airport_trips(tpep_pickup_datetime DATE, airport_fee DOUBLE, payment_type INTEGER, tolls_amount DOUBLE)
 COMMENT 'Airport trips table'
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
@@ -55,13 +55,33 @@ hdfs dfs -put /home/hadoop/landing/yellow_tripdata_2021-02.parquet /ingest
 
 ![image_04](./img/img04.png)
 
+* Ubicación del archivo: `/home/hadoop/scripts`
+* Cambiar permisos del archivo con: `chmod 777 ingest_2.sh`
+
 
 ### Ejercicio 4
 
 Crear un archivo `.py` que permita, mediante Spark, crear un dataframe uniendo los viajes del mes 01 y mes 02 del año 2021 y luego insertar en la tabla `airport_trips` los viajes que tuvieron como inicio o destino aeropuertos, que hayan pagado con dinero.
 
+* Archivo creado: `transform_tripdata.py`
+* Ubicación del archivo: `/home/hadoop/scripts`
+* Cambiar permisos del archivo con: `chmod 777 transform_tripdata.py`
+
+![image_05](./img/img05.png)
+
+
 ### Ejercicio 5
 
-Realizar un proceso automático en Airflow que orqueste los archivos creados en los puntos 3 y 4.
-
+Realizar un proceso automático en Airflow que orqueste los archivos creados en los puntos 3 y 4.  
 Correrlo y mostrar una captura de pantalla (del DAG y del resultado en la base de datos).
+
+* Archivo creado: `exercise_class_7_dag.py`
+* Ubicación del archivo: `/home/hadoop/airflow/dags`
+
+![image_06](./img/img06.png)
+
+![image_07](./img/img07.png)
+
+![image_08](./img/img08.png)
+
+![image_09](./img/img09.png)
