@@ -32,15 +32,11 @@ df_tripdata_2021 = df_tripdata_2021.sort(
     df_tripdata_2021.tpep_dropoff_datetime.asc(),
 )
 
-# Filter travels paid with cash
-df_tripdata_2021_filter = df_tripdata_2021.filter(
-    df_tripdata_2021.payment_type == 2
-)
-
-# Filter travels that started or ended at airports
+# Filter travels paid with cash that started or ended at airports
 # Airport_fee: $1.25 for pick up only at LaGuardia and John F. Kennedy Airports
-df_tripdata_2021_filter = df_tripdata_2021_filter.filter(
-    df_tripdata_2021.airport_fee == 1.25
+df_tripdata_2021_filter = df_tripdata_2021.filter(
+    (df_tripdata_2021.payment_type == 2)
+    & (df_tripdata_2021.airport_fee == 1.25)
 )
 
 # Select columns

@@ -42,6 +42,13 @@ describe extended <table_name>;
 describe formatted <table_name>;
 ```
 
+**ELiminar una tabla externa**
+
+```
+ALTER TABLE <TABLE_NAME> SET TBLPROPERTIES ('EXTERNAL'='FALSE');
+DROP TABLE <TABLE_NAME>;
+```
+
 ---
 
 ## Diccionario de datos:
