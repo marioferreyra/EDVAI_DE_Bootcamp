@@ -15,6 +15,12 @@ hdfs dfs -ls /
 hdfs dfs -rm -f /ingest/*
 ```
 
+**Remover un directorio**
+
+```
+hdfs dfs -rm -r <DIRECTORY>
+```
+
 **Mover archivos al FileSystem**
 
 ```

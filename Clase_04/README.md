@@ -27,21 +27,21 @@ Comandos Sqoop
 ==============
 
 **Listar databases:**
-```
+```bash
 sqoop list-databases \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres -P
 ```
 
 **Listar tablas:**
-```
+```bash
 sqoop list-tables \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres -P
 ```
 
 **Ejecutar queries:**
-```
+```bash
 sqoop eval \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres \
@@ -50,7 +50,7 @@ sqoop eval \
 ```
 
 **Importar tablas:**
-```
+```bash
 sqoop import \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres\
@@ -63,7 +63,7 @@ sqoop import \
 ```
 
 **Importar tablas con filtro:**
-```
+```bash
 sqoop import \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres\
@@ -83,7 +83,7 @@ Clase 05 - Ejercicios Sqoop
 
 Mostrar las tablas de la base de datos northwind.
 
-```
+```bash
 sqoop list-databases \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres -P
@@ -93,7 +93,7 @@ sqoop list-databases \
 
 Mostrar los clientes de Argentina.
 
-```
+```bash
 sqoop eval \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres \
@@ -101,7 +101,7 @@ sqoop eval \
 --query "select * from customers limit 10"
 ```
 
-```
+```bash
 sqoop eval \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres \
@@ -113,7 +113,7 @@ sqoop eval \
 
 Importar un archivo `.parquet` que contenga toda la tabla orders. Luego ingestar el archivo a HDFS (carpeta `/sqoop/ingest`).
 
-```
+```bash
 sqoop import \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres \
@@ -129,7 +129,7 @@ sqoop import \
 
 Importar un archivo `.parquet` que contenga solo los productos con mas 20 unidades en stock, de la tabla Products. Luego ingestar el archivo a HDFS (carpeta `/sqoop/ingest`).
 
-```
+```bash
 sqoop eval \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres \
@@ -137,7 +137,7 @@ sqoop eval \
 --query "select * from products where units_in_stock > 20 limit 10"
 ```
 
-```
+```bash
 sqoop import \
 --connect jdbc:postgresql://172.17.0.4:5432/northwind \
 --username postgres \
@@ -158,7 +158,7 @@ Clase 05 - Ejercicios Nifi
 En el shell de Nifi, crear un script `.sh` que descargue el archivo starwars.csv al directorio `/home/nifi/ingest` (crearlo si es necesario).
 Ejecutarlo con `./home/nifi/ingest/ingest.sh`
 
-```
+```bash
 wget -P /home/nifi/ingest https://github.com/fpineyro/homework-0/blob/master/starwars.csv
 ```
 
