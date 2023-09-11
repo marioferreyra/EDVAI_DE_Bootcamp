@@ -276,10 +276,24 @@ limit
 
 Qué datos externos agregaría en este dataset que mejoraría el análisis de los datos.
 
+> Para realizar un análisis exhaustivo de los datos de aterrizajes y despegues en todo el territorio argentino, sería importante considerar los siguientes datos externos que pueden enriquecer la información y mejorar el análisis:  
+> Se podrían considerar los siguientes datos, para poder enriquecer el dataset:
+> * **Datos Meteorológicos**: Como la temperatura, viento y visibilidad, ya que estos datos nos podrían ayudar a para entender cómo afectan los factores climáticos a los vuelos.
+> * **Datos de Tráfico Aéreo en Real Time**: Agregar datos de tráfico aéreo en tiempo real puede ayudarnos a conocer la congestión del espacio aéreo, impactando en los tiempos de vuelo y las rutas utilizadas por los aviones.
+> * **Datos de Costos y Tarifas Aéreas**: Información sobre los costos operativos de las aerolíneas, tarifas de vuelo, y estructuras de precios puede ser esencial para entender la rentabilidad y la competitividad entre las distintas aerolíneas.
+
 #### Tarea 12
 
 Elabore sus conclusiones y recomendaciones sobre este proyecto.
 
+> Se puede apreciar que Aerolíneas Argentinas es la aerolínea, con amplia diferencia, que más pasajeros transporta, es decir, que es la aerolínea que más eligen los pasajeros por lo que a las aeronaves de esta empresa se les debería dar más prioridad a la hora de darle mantenimiento.  
+> También se podría incorporar más aeronaves a la empresa y construir negociar para impulsar que todos los aeropuertos del país acepten vuelos de esta aerolínea, e impulsar una campaña de ofertas de vuelos con descuentos o pagos en cuotas para seguir incrementando su uso y por consecuente ganar más dinero.
+
 #### Tarea 13
 
 Proponer una arquitectura alternativa para este proceso ya sea con herramientas on premise o cloud (Sí aplica).
+
+![image_17](./img/img17.png)
+
+> Por un lado insertamos los datos provenientes de bases de datos o algún bucket de AWS a un Cloud Storage usando Data Fusion y por otro lado insertamos la data en real time la insertamos tambien en un Cloud Storage mediante el servicio de PubSub. Todo orquestado por Cloud Composer.  
+> Luego con Dataproc procesamos esa información y la almacenamos en BigQuery para su posterior visualización usando Looker Studio.

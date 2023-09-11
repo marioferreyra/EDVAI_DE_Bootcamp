@@ -217,6 +217,14 @@ order by
 
 Elabore sus conclusiones y recomendaciones sobre este proyecto.
 
+> Como los autos ecológicos (híbridos y eléctricos) son en porcentajes los que más reseñas tienen y siendo los Tesla (autos ecológicos) los autos más elegidos a la hora de alquilar, deberían aumentarse la flota de estos autos para aumentar en las ciudades de San Jose, Phoenix y Portland los alquileres de vehículos, ya que estas ciudades tienen el menor número de alquileres de autos ecológicos.  
+> Además la compañía debería aumentar la disponibilidad de vehículos en Montana para aumentar el número de alquileres en ese estado, ya que dicho estado es el que menos alquileres tiene.
+
 #### Tarea 7
 
 Proponer una arquitectura alternativa para este proceso ya sea con herramientas on premise o cloud (Si aplica).
+
+![image_14](./img/img14.png)
+
+> Por un lado insertamos los datos provenientes de bases de datos o algún bucket de AWS a un Cloud Storage usando Data Fusion orquestándolo con Cloud Composer. Adicional se le podría sumar una fuente que contenga los datos del los vehículos, como por ejemplo el consumo promedio de combustible, velocidad, aceleración, etc.  
+> Luego con Dataproc procesamos esa información y la almacenamos en BigQuery para su posterior visualización usando Looker Studio.
